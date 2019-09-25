@@ -39,7 +39,7 @@ namespace codenation
 
             dados.resumo_criptografico = Hash.coder(dados.decifrado);
 
-            Console.WriteLine(Data.json(dados));
+            Export.SubmitAnswer(dados);
         }
     }
 }
