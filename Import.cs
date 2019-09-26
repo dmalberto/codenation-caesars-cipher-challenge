@@ -5,26 +5,19 @@ using Newtonsoft.Json;
 
 public class Import 
 {
-    public Import(string Token)
+    public static Data GetData()
     {
-        token = Token;
-    }
-
-    private string token {get; set;}
-    private Data dados {get; set;}
-
-    public Data GetData()
-    {
-        var requisicaoWeb = WebRequest.CreateHttp($"https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token={token}");         
+        var requisicaoWeb = WebRequest.CreateHttp($"{Constants.getUrl}{Constants.token}");         
             requisicaoWeb.Method = "GET";
 
-        using (var resposta = requisicaoWeb.GetResponse())
+        using (var response = requisicaoWeb.GetResponse())
         {
-            StreamReader reader = new StreamReader(resposta.GetResponseStream());
+            StreamReader reader = new StreamReader(response.GetResponseStream());
             object objResponse = reader.ReadToEnd();
-            dados = JsonConvert.DeserializeObject<Data>(objResponse.ToString());
-            resposta.Close();
-            return dados;
+            Data data = new Data();
+            data = JsonConvert.DeserializeObject<Data>(objResponse.ToString());
+            response.Close();
+            return data;
         }
     }
 }

@@ -6,16 +6,17 @@ using System.Collections.Specialized;
 
 public class Export 
 {
-    public static void SubmitAnswer(Data data)
+
+    
+    static void SaveFile(Data data)
     {
         string json = Data.json(data);
-        File.WriteAllText("answer.json", json);
-
-        string url = $"https://api.codenation.dev/v1/challenge/dev-ps/submit-solution?token={data.token}";
-        string file = "answer.json";
-        string contentType = "multipart/form-data";
-        string paramName = "answer";
-
+        File.WriteAllText(Constants.file, json);
+    }
+    public static void SubmitAnswer(Data data)
+    {
+        SaveFile(data);
+        
         // Referência: https://stackoverflow.com/questions/566462/upload-files-with-httpwebrequest-multipart-form-data
 
         NameValueCollection nvc = new NameValueCollection();
@@ -23,7 +24,7 @@ public class Export
         string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
         byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
-        HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
+        HttpWebRequest wr = (HttpWebRequest)WebRequest.Create($"{Constants.postUrl}{data.token}");
         wr.ContentType = "multipart/form-data; boundary=" + boundary;
         wr.Method = "POST";
         wr.KeepAlive = true;
@@ -42,11 +43,11 @@ public class Export
         rs.Write(boundarybytes, 0, boundarybytes.Length);
 
         string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
-        string header = string.Format(headerTemplate, paramName, file, contentType);
+        string header = string.Format(headerTemplate, Constants.paramName, Constants.file, Constants.contentType);
         byte[] headerbytes = System.Text.Encoding.UTF8.GetBytes(header);
         rs.Write(headerbytes, 0, headerbytes.Length);
 
-        FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
+        FileStream fileStream = new FileStream(Constants.file, FileMode.Open, FileAccess.Read);
         byte[] buffer = new byte[4096];
         int bytesRead = 0;
         while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0) {
@@ -65,7 +66,7 @@ public class Export
             StreamReader reader2 = new StreamReader(stream2);
             var teste = reader2.ReadToEnd();
             Console.Write(teste.ToString());
-        } catch(Exception ex) {
+        } catch {
             if(wresp != null) {
                 wresp.Close();
                 wresp = null;

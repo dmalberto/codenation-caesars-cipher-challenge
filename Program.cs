@@ -4,12 +4,9 @@ namespace codenation
 {
     class Program
     {
-        const string token = "94fbe8b6066b7612bb28f720e61a05cd05edf0e9";
+        static Data dados = Import.GetData();
         static void Main(string[] args)
         {
-            Import import = new Import(token);
-            Data dados = import.GetData();
-
             char[] alfabeto = ("abcdefghijklmnopqrstuvwxyz").ToCharArray();
             
             char[] arrayCodificado = dados.cifrado.ToCharArray();
@@ -19,13 +16,16 @@ namespace codenation
             {
                 try
                 {
+                    // int j = Array.IndexOf(alfabeto,arrayCodificado[i]);
+                    // if (arrayCodificado[i] == char.Parse("a"))
+                    //     arrayDecodificado[i] = char.Parse("y");
+                    // else if (arrayCodificado[i] == char.Parse("b"))
+                    //     arrayDecodificado[i] = char.Parse("z");
+                    // else
+                    //     arrayDecodificado[i] = alfabeto[j - 2];
+
                     int j = Array.IndexOf(alfabeto,arrayCodificado[i]);
-                    if (arrayCodificado[i] == char.Parse("a"))
-                        arrayDecodificado[i] = char.Parse("y");
-                    else if (arrayCodificado[i] == char.Parse("b"))
-                        arrayDecodificado[i] = char.Parse("z");
-                    else
-                        arrayDecodificado[i] = alfabeto[j - 2];
+                    arrayDecodificado[i] = alfabeto[j - 2];
                 }
 
                 catch
@@ -33,11 +33,15 @@ namespace codenation
                     arrayDecodificado[i] = arrayCodificado[i];
                 }
             }
+            GravaDados(arrayDecodificado);
+        }
+        static void GravaDados(char[] arrayDecodificado)
+        {
 
             foreach (var item in arrayDecodificado)
                 dados.decifrado += item;
 
-            dados.resumo_criptografico = Hash.coder(dados.decifrado);
+            dados.resumo_criptografico = Hash.Coder(dados.decifrado);
 
             Export.SubmitAnswer(dados);
         }

@@ -3,7 +3,7 @@ using System.Text;
 using System.Security.Cryptography;
 public class Hash
 {
-    public static string coder(string input)
+    public static string Coder(string input)
     {
         // Referência: https://gist.github.com/kristopherjohnson/3021045
         // Converte string em array de bytes
