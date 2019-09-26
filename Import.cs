@@ -17,7 +17,6 @@ public class Import
     {
         var requisicaoWeb = WebRequest.CreateHttp($"https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token={token}");         
             requisicaoWeb.Method = "GET";
-            // requisicaoWeb.UserAgent = "";
 
         using (var resposta = requisicaoWeb.GetResponse())
         {
