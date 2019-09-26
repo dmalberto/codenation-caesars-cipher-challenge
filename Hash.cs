@@ -5,6 +5,8 @@ public class Hash
 {
     public static string coder(string input)
     {
+        // Referência: https://gist.github.com/kristopherjohnson/3021045
+        // Converte string em array de bytes
         byte[] bytes = Encoding.UTF8.GetBytes(input);
 
         var sha1 = SHA1.Create();

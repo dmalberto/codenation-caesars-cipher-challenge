@@ -16,6 +16,8 @@ public class Export
         string contentType = "multipart/form-data";
         string paramName = "answer";
 
+        // Referência: https://stackoverflow.com/questions/566462/upload-files-with-httpwebrequest-multipart-form-data
+
         NameValueCollection nvc = new NameValueCollection();
 
         string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
