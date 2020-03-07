@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 
-public class Export 
+public class Export
 {
     public static void SubmitAnswer(Data data)
     {
@@ -49,7 +49,8 @@ public class Export
         FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
         byte[] buffer = new byte[4096];
         int bytesRead = 0;
-        while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0) {
+        while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+        {
             rs.Write(buffer, 0, bytesRead);
         }
         fileStream.Close();
@@ -59,20 +60,27 @@ public class Export
         rs.Close();
 
         WebResponse wresp = null;
-        try {
+        try
+        {
             wresp = wr.GetResponse();
             Stream stream2 = wresp.GetResponseStream();
             StreamReader reader2 = new StreamReader(stream2);
             var teste = reader2.ReadToEnd();
             Console.Write(teste.ToString());
-        } catch(Exception ex) {
-            if(wresp != null) {
+        }
+        catch (Exception ex)
+        {
+            if (wresp != null)
+            {
                 wresp.Close();
                 wresp = null;
+                Console.WriteLine(ex.ToString());
             }
-        } finally {
+        }
+        finally
+        {
             wr = null;
         }
     }
-    
+
 }
