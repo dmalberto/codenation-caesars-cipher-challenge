@@ -9,7 +9,6 @@ namespace codenation
         {
             Import import = new Import(token);
             Data dados = import.GetData();
-            Console.WriteLine(dados.numero_casas);
             char[] alfabeto = ("abcdefghijklmnopqrstuvwxyz").ToCharArray();
 
             char[] arrayCodificado = dados.cifrado.ToCharArray();
@@ -22,16 +21,9 @@ namespace codenation
                 try
                 {
                     int j = Array.IndexOf(alfabeto, arrayCodificado[i]);
-                    if (arrayCodificado[i] == char.Parse("a"))
+                    int aaa = (26 + (j - dados.numero_casas));
+                    if (Array.IndexOf(alfabeto, arrayCodificado[i]) == 0)
                         arrayDecodificado[i] = char.Parse("v");
-                    else if (arrayCodificado[i] == char.Parse("b"))
-                        arrayDecodificado[i] = char.Parse("w");
-                    else if (arrayCodificado[i] == char.Parse("c"))
-                        arrayDecodificado[i] = char.Parse("x");
-                    else if (arrayCodificado[i] == char.Parse("d"))
-                        arrayDecodificado[i] = char.Parse("y");
-                    else if (arrayCodificado[i] == char.Parse("e"))
-                        arrayDecodificado[i] = char.Parse("z");
                     else
                         arrayDecodificado[i] = alfabeto[j - dados.numero_casas];
                 }
