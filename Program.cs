@@ -8,38 +8,38 @@ namespace codenation
         static void Main(string[] args)
         {
             Import import = new Import(token);
-            Data dados = import.GetData();
-            char[] alfabeto = ("abcdefghijklmnopqrstuvwxyz").ToCharArray();
+            Data data = import.GetData();
+            char[] alphabet = ("abcdefghijklmnopqrstuvwxyz").ToCharArray();
 
-            char[] arrayCodificado = dados.cifrado.ToCharArray();
-            char[] arrayDecodificado = new char[arrayCodificado.Length];
+            char[] codedArray = data.cifrado.ToCharArray();
+            char[] decodedArray = new char[codedArray.Length];
 
-            Console.WriteLine(dados.cifrado);
+            Console.WriteLine(data.cifrado);
 
-            for (int i = 0; i < arrayCodificado.Length; i++)
+            for (int i = 0; i < codedArray.Length; i++)
             {
                 try
                 {
-                    int j = Array.IndexOf(alfabeto, arrayCodificado[i]);
-                    int newPos = j - dados.numero_casas;
+                    int oldPos = Array.IndexOf(alphabet, codedArray[i]);
+                    int newPos = oldPos - data.numero_casas;
 
-                    if (newPos < 0 && Math.Abs(newPos) <= dados.numero_casas)
-                        newPos = alfabeto.Length - Math.Abs(j) - dados.numero_casas;
+                    if (newPos < 0 && Math.Abs(newPos) <= data.numero_casas)
+                        newPos = alphabet.Length - Math.Abs(oldPos) - data.numero_casas;
 
-                    arrayDecodificado[i] = alfabeto[newPos];
+                    decodedArray[i] = alphabet[newPos];
                 }
                 catch
                 {
-                    arrayDecodificado[i] = arrayCodificado[i];
+                    decodedArray[i] = codedArray[i];
                 }
             }
 
-            foreach (var item in arrayDecodificado)
-                dados.decifrado += item;
-            Console.WriteLine(dados.decifrado.ToString());
-            dados.resumo_criptografico = Hash.coder(dados.decifrado);
+            foreach (var item in decodedArray)
+                data.decifrado += item;
+            Console.WriteLine(data.decifrado.ToString());
+            data.resumo_criptografico = Hash.coder(data.decifrado);
 
-            Export.SubmitAnswer(dados);
+            Export.SubmitAnswer(data);
         }
     }
 }
