@@ -4,7 +4,7 @@ namespace codenation
 {
     class Program
     {
-        const string token = "3277aded868360b49307353022717d546bb28e69";
+        const string token = "";
         static void Main(string[] args)
         {
             Import import = new Import(token);
@@ -21,11 +21,12 @@ namespace codenation
                 try
                 {
                     int j = Array.IndexOf(alfabeto, arrayCodificado[i]);
-                    int aaa = (26 + (j - dados.numero_casas));
-                    if (Array.IndexOf(alfabeto, arrayCodificado[i]) == 0)
-                        arrayDecodificado[i] = char.Parse("v");
-                    else
-                        arrayDecodificado[i] = alfabeto[j - dados.numero_casas];
+                    int newPos = j - dados.numero_casas;
+
+                    if (newPos < 0 && Math.Abs(newPos) <= dados.numero_casas)
+                        newPos = alfabeto.Length - Math.Abs(j) - dados.numero_casas;
+
+                    arrayDecodificado[i] = alfabeto[newPos];
                 }
                 catch
                 {
