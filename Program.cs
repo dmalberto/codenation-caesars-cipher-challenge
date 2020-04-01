@@ -4,7 +4,7 @@ namespace codenation
 {
     class Program
     {
-        const string token = "3277aded868360b49307353022717d546bb28e69";
+        const string token = "";
         static void Main(string[] args)
         {
             Import import = new Import(token);
