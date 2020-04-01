@@ -21,10 +21,7 @@ namespace codenation
                 try
                 {
                     int oldPos = Array.IndexOf(alphabet, codedArray[i]);
-                    int newPos = oldPos - data.numero_casas;
-
-                    if (newPos < 0 && Math.Abs(newPos) <= data.numero_casas)
-                        newPos = alphabet.Length - Math.Abs(oldPos) - data.numero_casas;
+                    int newPos = GetNewPos(oldPos, data, alphabet.Length);
 
                     decodedArray[i] = alphabet[newPos];
                 }
@@ -40,6 +37,15 @@ namespace codenation
             data.resumo_criptografico = Hash.coder(data.decifrado);
 
             Export.SubmitAnswer(data);
+        }
+        static int GetNewPos(int oldPos, Data data, int length)
+        {
+            int pos = oldPos - data.numero_casas;
+
+            if (pos < 0 && Math.Abs(pos) <= data.numero_casas)
+                pos = length - Math.Abs(oldPos) - data.numero_casas;
+
+            return pos;
         }
     }
 }
